@@ -1,0 +1,15 @@
+E:\Solovos\TaskTracker\src\TaskTracker.Application\bin\Debug\net8.0\TaskTracker.Application.deps.json
+E:\Solovos\TaskTracker\src\TaskTracker.Application\bin\Debug\net8.0\TaskTracker.Application.dll
+E:\Solovos\TaskTracker\src\TaskTracker.Application\bin\Debug\net8.0\TaskTracker.Application.pdb
+E:\Solovos\TaskTracker\src\TaskTracker.Application\bin\Debug\net8.0\TaskTracker.Domain.dll
+E:\Solovos\TaskTracker\src\TaskTracker.Application\bin\Debug\net8.0\TaskTracker.Domain.pdb
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\TaskTracker.Application.csproj.AssemblyReference.cache
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\TaskTracker.Application.GeneratedMSBuildEditorConfig.editorconfig
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\TaskTracker.Application.AssemblyInfoInputs.cache
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\TaskTracker.Application.AssemblyInfo.cs
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\TaskTracker.Application.csproj.CoreCompileInputs.cache
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\TaskTrac.CBC11A5F.Up2Date
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\TaskTracker.Application.dll
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\refint\TaskTracker.Application.dll
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\TaskTracker.Application.pdb
+E:\Solovos\TaskTracker\src\TaskTracker.Application\obj\Debug\net8.0\ref\TaskTracker.Application.dll

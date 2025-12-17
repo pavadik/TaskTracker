@@ -1,0 +1,6 @@
+{
+  "TaskTracker.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "E:\\Solovos\\TaskTracker\\src\\TaskTracker.Api",
+  "TaskTracker.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "E:\\Solovos\\TaskTracker\\src\\TaskTracker.Application",
+  "TaskTracker.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "E:\\Solovos\\TaskTracker\\src\\TaskTracker.Domain",
+  "TaskTracker.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "E:\\Solovos\\TaskTracker\\src\\TaskTracker.Infrastructure"
+}

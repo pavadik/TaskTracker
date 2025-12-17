@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "lGSZSlSzb6w=",
+  "success": true,
+  "projectFilePath": "E:\\Solovos\\TaskTracker\\src\\TaskTracker.Domain\\TaskTracker.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
