@@ -61,8 +61,7 @@ public class WorkspaceConfiguration : IEntityTypeConfiguration<Workspace>
             .HasColumnName("deleted_by");
 
         builder.Property(w => w.RowVersion)
-            .HasColumnName("row_version")
-            .IsRowVersion();
+            .HasColumnName("row_version");
 
         builder.HasQueryFilter(w => !w.IsDeleted);
 

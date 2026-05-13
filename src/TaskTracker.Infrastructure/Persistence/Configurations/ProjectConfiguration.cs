@@ -74,8 +74,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasColumnName("deleted_by");
 
         builder.Property(p => p.RowVersion)
-            .HasColumnName("row_version")
-            .IsRowVersion();
+            .HasColumnName("row_version");
 
         builder.HasQueryFilter(p => !p.IsDeleted);
 

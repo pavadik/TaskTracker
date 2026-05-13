@@ -66,8 +66,7 @@ public class WorkflowStatusConfiguration : IEntityTypeConfiguration<WorkflowStat
             .HasColumnName("deleted_by");
 
         builder.Property(s => s.RowVersion)
-            .HasColumnName("row_version")
-            .IsRowVersion();
+            .HasColumnName("row_version");
 
         builder.HasQueryFilter(s => !s.IsDeleted);
 
