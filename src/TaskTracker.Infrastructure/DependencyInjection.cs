@@ -1,5 +1,7 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaskTracker.Application.Common.Interfaces;
@@ -17,7 +19,8 @@ public static class DependencyInjection
         // Database
         services.AddDbContext<TaskTrackerDbContext>(options =>
             options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection"),
+                configuration.GetConnectionString("TaskTracker") 
+                    ?? configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly(typeof(TaskTrackerDbContext).Assembly.FullName)));
 
         // Repositories
@@ -28,34 +31,51 @@ public static class DependencyInjection
         services.AddScoped<ITaskRepository, TaskRepository>();
 
         // Services
-        services.AddScoped<ICacheService, RedisCacheService>();
         services.AddScoped<IFileStorageService, FileStorageService>();
         services.AddScoped<INotificationService, NotificationService>();
 
-        // Redis
-        services.AddStackExchangeRedisCache(options =>
+        // Redis (optional — fall back to in-memory distributed cache)
+        var redisConn = configuration.GetConnectionString("Redis");
+        if (!string.IsNullOrWhiteSpace(redisConn))
         {
-            options.Configuration = configuration.GetConnectionString("Redis");
-            options.InstanceName = "TaskTracker:";
-        });
-
-        // MassTransit with RabbitMQ
-        services.AddMassTransit(x =>
-        {
-            x.SetKebabCaseEndpointNameFormatter();
-            x.AddConsumers(typeof(DependencyInjection).Assembly);
-
-            x.UsingRabbitMq((context, cfg) =>
+            services.AddStackExchangeRedisCache(options =>
             {
-                var rabbitMqConfig = configuration.GetSection("RabbitMQ");
-                cfg.Host(rabbitMqConfig["Host"] ?? "localhost", rabbitMqConfig["VirtualHost"] ?? "/", h =>
-                {
-                    h.Username(rabbitMqConfig["Username"] ?? "guest");
-                    h.Password(rabbitMqConfig["Password"] ?? "guest");
-                });
-                cfg.ConfigureEndpoints(context);
+                options.Configuration = redisConn;
+                options.InstanceName = "TaskTracker:";
             });
-        });
+            services.AddScoped<ICacheService, RedisCacheService>();
+        }
+        else
+        {
+            services.AddDistributedMemoryCache();
+            services.AddScoped<ICacheService, RedisCacheService>();
+        }
+
+        // MassTransit with RabbitMQ (optional)
+        var rabbitHost = configuration.GetSection("RabbitMQ")["Host"];
+        if (!string.IsNullOrWhiteSpace(rabbitHost))
+        {
+            services.AddMassTransit(x =>
+            {
+                x.SetKebabCaseEndpointNameFormatter();
+                x.AddConsumers(typeof(DependencyInjection).Assembly);
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    var rabbitMqConfig = configuration.GetSection("RabbitMQ");
+                    cfg.Host(rabbitMqConfig["Host"] ?? "localhost", rabbitMqConfig["VirtualHost"] ?? "/", h =>
+                    {
+                        h.Username(rabbitMqConfig["Username"] ?? "guest");
+                        h.Password(rabbitMqConfig["Password"] ?? "guest");
+                    });
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+        }
+        else
+        {
+            services.AddMassTransit(x => x.UsingInMemory());
+        }
 
         // SignalR
         services.AddSignalR();

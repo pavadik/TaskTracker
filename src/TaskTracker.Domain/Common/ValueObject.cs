@@ -1,8 +1,5 @@
 namespace TaskTracker.Domain.Common;
 
-/// <summary>
-/// Base class for value objects implementing equality based on structural comparison
-/// </summary>
 public abstract class ValueObject
 {
     protected abstract IEnumerable<object?> GetEqualityComponents();
@@ -13,7 +10,6 @@ public abstract class ValueObject
             return false;
 
         var other = (ValueObject)obj;
-        
         return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
     }
 
@@ -26,17 +22,10 @@ public abstract class ValueObject
 
     public static bool operator ==(ValueObject? left, ValueObject? right)
     {
-        if (left is null && right is null)
-            return true;
-
-        if (left is null || right is null)
-            return false;
-
+        if (left is null && right is null) return true;
+        if (left is null || right is null) return false;
         return left.Equals(right);
     }
 
-    public static bool operator !=(ValueObject? left, ValueObject? right)
-    {
-        return !(left == right);
-    }
+    public static bool operator !=(ValueObject? left, ValueObject? right) => !(left == right);
 }

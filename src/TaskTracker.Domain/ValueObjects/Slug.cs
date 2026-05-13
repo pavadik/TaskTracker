@@ -1,61 +1,50 @@
+using System.Text.RegularExpressions;
 using TaskTracker.Domain.Common;
 
 namespace TaskTracker.Domain.ValueObjects;
 
-/// <summary>
-/// Value object representing a slug (URL-friendly identifier)
-/// </summary>
-public class Slug : ValueObject
+public partial class Slug : ValueObject
 {
-    public string Value { get; }
+    public string Value { get; private set; } = string.Empty;
+
+    private Slug() { }
 
     private Slug(string value)
     {
         Value = value;
     }
 
-    public static Result<Slug> Create(string value)
+    public static Result<Slug> Create(string input)
     {
-        if (string.IsNullOrWhiteSpace(value))
+        if (string.IsNullOrWhiteSpace(input))
             return Result.Failure<Slug>("Slug cannot be empty");
 
-        var slug = Normalize(value);
+        var slug = input.Trim().ToLowerInvariant();
+        slug = NonAlphanumericRegex().Replace(slug, "");
+        slug = WhitespaceRegex().Replace(slug, "-");
+        slug = slug.Trim('-');
 
-        if (slug.Length < 2)
-            return Result.Failure<Slug>("Slug must be at least 2 characters long");
+        if (string.IsNullOrEmpty(slug))
+            return Result.Failure<Slug>("Slug resulted in empty string after sanitizing");
 
         if (slug.Length > 50)
-            return Result.Failure<Slug>("Slug cannot exceed 50 characters");
+            slug = slug[..50].TrimEnd('-');
 
         return Result.Success(new Slug(slug));
     }
 
-    private static string Normalize(string input)
-    {
-        // Convert to lowercase, replace spaces and special chars with hyphens
-        var normalized = input.ToLowerInvariant().Trim();
-        
-        // Replace non-alphanumeric with hyphens
-        var result = new char[normalized.Length];
-        for (int i = 0; i < normalized.Length; i++)
-        {
-            result[i] = char.IsLetterOrDigit(normalized[i]) ? normalized[i] : '-';
-        }
-        
-        var slug = new string(result);
-        
-        // Remove multiple consecutive hyphens
-        while (slug.Contains("--"))
-            slug = slug.Replace("--", "-");
-        
-        // Remove leading/trailing hyphens
-        return slug.Trim('-');
-    }
+    public static implicit operator string(Slug slug) => slug.Value;
+
+    public override string ToString() => Value;
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
         yield return Value;
     }
 
-    public override string ToString() => Value;
+    [GeneratedRegex("[^a-z0-9\\s-]")]
+    private static partial Regex NonAlphanumericRegex();
+
+    [GeneratedRegex("[\\s]+")]
+    private static partial Regex WhitespaceRegex();
 }
