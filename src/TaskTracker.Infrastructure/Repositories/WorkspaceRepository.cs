@@ -15,7 +15,7 @@ public class WorkspaceRepository : Repository<Workspace>, IWorkspaceRepository
     public async Task<Workspace?> GetBySlugAsync(Slug slug, CancellationToken cancellationToken = default)
     {
         return await DbSet
-            .FirstOrDefaultAsync(w => w.Slug == slug, cancellationToken);
+            .FirstOrDefaultAsync(w => w.Slug.Value == slug.Value, cancellationToken);
     }
 
     public async Task<IReadOnlyList<Workspace>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
@@ -28,7 +28,7 @@ public class WorkspaceRepository : Repository<Workspace>, IWorkspaceRepository
     public async Task<bool> ExistsAsync(Slug slug, CancellationToken cancellationToken = default)
     {
         return await DbSet
-            .AnyAsync(w => w.Slug == slug, cancellationToken);
+            .AnyAsync(w => w.Slug.Value == slug.Value, cancellationToken);
     }
 
     public async Task<Workspace?> GetWithMembersAsync(Guid id, CancellationToken cancellationToken = default)

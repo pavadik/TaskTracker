@@ -27,6 +27,9 @@ public partial class Slug : ValueObject
         if (string.IsNullOrEmpty(slug))
             return Result.Failure<Slug>("Slug resulted in empty string after sanitizing");
 
+        if (slug.Length < 2)
+            return Result.Failure<Slug>("Slug must be at least 2 characters");
+
         if (slug.Length > 50)
             slug = slug[..50].TrimEnd('-');
 

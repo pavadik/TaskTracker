@@ -48,8 +48,8 @@ public class TasksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTask([FromBody] CreateTaskCommand command, CancellationToken cancellationToken)
     {
-        var taskId = await _mediator.Send(command, cancellationToken);
-        return CreatedAtAction(nameof(GetTask), new { id = taskId }, new { id = taskId });
+        var task = await _mediator.Send(command, cancellationToken);
+        return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
     }
 
     /// <summary>

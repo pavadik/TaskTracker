@@ -1,6 +1,6 @@
 # TaskTracker
 
-A modern task tracking API similar to Jira, Linear, and YouTrack, built with ASP.NET Core 8 following Clean Architecture principles.
+A modern task tracking API similar to Jira, Linear, and YouTrack, built with ASP.NET Core 10 following Clean Architecture principles.
 
 ## Features
 
@@ -17,8 +17,8 @@ A modern task tracking API similar to Jira, Linear, and YouTrack, built with ASP
 
 ## Tech Stack
 
-- .NET 8 (LTS)
-- Entity Framework Core 8 (Code First)
+- .NET 10 (LTS)
+- Entity Framework Core 10 (Code First)
 - MediatR 14 (CQRS)
 - FluentValidation 12
 - Serilog (Structured Logging)
@@ -29,7 +29,7 @@ A modern task tracking API similar to Jira, Linear, and YouTrack, built with ASP
 
 ### Prerequisites
 
-- .NET 8 SDK
+- .NET 10 SDK
 - Docker (for local infrastructure)
 
 ### Running Infrastructure

@@ -72,7 +72,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("deleted_by");
 
         builder.Property(u => u.RowVersion)
-            .HasColumnName("row_version")
+            .HasColumnName("xmin")
             .IsRowVersion();
 
         builder.HasQueryFilter(u => !u.IsDeleted);

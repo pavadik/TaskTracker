@@ -15,7 +15,7 @@ public class ProjectRepository : Repository<Project>, IProjectRepository
     public async Task<Project?> GetBySlugAsync(Guid workspaceId, Slug slug, CancellationToken cancellationToken = default)
     {
         return await DbSet
-            .FirstOrDefaultAsync(p => p.WorkspaceId == workspaceId && p.Slug == slug, cancellationToken);
+            .FirstOrDefaultAsync(p => p.WorkspaceId == workspaceId && p.Slug.Value == slug.Value, cancellationToken);
     }
 
     public async Task<IReadOnlyList<Project>> GetByWorkspaceIdAsync(Guid workspaceId, CancellationToken cancellationToken = default)
@@ -29,7 +29,7 @@ public class ProjectRepository : Repository<Project>, IProjectRepository
     public async Task<bool> ExistsAsync(Guid workspaceId, Slug slug, CancellationToken cancellationToken = default)
     {
         return await DbSet
-            .AnyAsync(p => p.WorkspaceId == workspaceId && p.Slug == slug, cancellationToken);
+            .AnyAsync(p => p.WorkspaceId == workspaceId && p.Slug.Value == slug.Value, cancellationToken);
     }
 
     public async Task<bool> PrefixExistsAsync(Guid workspaceId, string prefix, CancellationToken cancellationToken = default)

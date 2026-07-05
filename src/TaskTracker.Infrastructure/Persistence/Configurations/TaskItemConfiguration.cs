@@ -103,7 +103,7 @@ public class TaskItemConfiguration : IEntityTypeConfiguration<TaskItem>
             .HasColumnName("deleted_by");
 
         builder.Property(t => t.RowVersion)
-            .HasColumnName("row_version")
+            .HasColumnName("xmin")
             .IsRowVersion();
 
         builder.HasQueryFilter(t => !t.IsDeleted);

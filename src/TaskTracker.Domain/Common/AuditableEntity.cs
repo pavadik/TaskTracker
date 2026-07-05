@@ -16,7 +16,7 @@ public abstract class AuditableEntity : Entity, IAuditableEntity, ISoftDeletable
     /// <summary>
     /// Row version for optimistic concurrency control
     /// </summary>
-    public byte[] RowVersion { get; private set; } = Array.Empty<byte>();
+    public uint RowVersion { get; private set; }
 
     protected AuditableEntity() : base() { }
     
