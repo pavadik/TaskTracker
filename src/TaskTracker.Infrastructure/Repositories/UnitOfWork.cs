@@ -36,6 +36,13 @@ public class UnitOfWork : IUnitOfWork
         return await _context.SaveChangesAsync(cancellationToken);
     }
 
+    public void MarkAdded<TEntity>(TEntity entity) where TEntity : class
+    {
+        // EF cannot infer Added state from a navigation when the PK is pre-set
+        // in the entity constructor and the parent aggregate is already tracked.
+        _context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+    }
+
     public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
         if (_currentTransaction != null)
